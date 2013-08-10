@@ -47,6 +47,7 @@ peopleExpensesModule.directive('droppable', function() {
 
                 	if(!invalid) {
 	                	drop.scope().$apply();
+                		focusPrice();
 	                	return true;
                 	}
                 }
@@ -69,15 +70,27 @@ peopleExpensesModule.controller('People', ['$scope', function($scope) {
 		var personId = $scope.personName.toLowerCase().replace(/[-\s]/g, '');
 		$scope.people.push({name: $scope.personName, id: personId});
 		$scope.personName = '';
-	}
-}]);
+	}}]);
 
 peopleExpensesModule.controller('Calculator', ['$scope', function($scope) {
-	$scope.owee;
-	$scope.owers = [];
-	$scope.payments = [];
+	$scope.buyer;
+	$scope.consumers = [];
+	$scope.transactions = [];
+
+	$scope.removeconsumer = function(id) {
+        angular.forEach($scope.consumers, function(person, i) {
+        	if(person.id == id)
+        		$scope.consumers.splice(i,1);
+        });
+	}
 
 	$scope.addReceipt = function() {
-
+		if($scope.buyer) {
+			$scope.transactions.push({buyer: $scope.buyer, consumers: angular.copy($scope.consumers), amount: $scope.priceInput, description: $scope.descriptionInput});
+			$scope.priceInput = '';
+			$scope.descriptionInput = '';
+			$scope.consumers = [];
+			focusPrice();
+		}
 	}
 }]);

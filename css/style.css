@@ -47,9 +47,6 @@ ul.bar_list li {
 	text-align: center;
 	background: #eee;
 }
-.buyers_input ul.limit-1 li {
-	margin-top: 100%;
-}
 
 .expense_input {
 	height: 100%;
@@ -57,17 +54,19 @@ ul.bar_list li {
 }
 
 .expense_input .buyers_input {
-	width: 150px;
+	width: 220px;
 	height: 100%;
 	border-right: 1px solid #aaa;
 	padding: 0;
 	float: left;
+	overflow: hidden;
 }
 .buyers_input>div {
-	height: 50%;
 	padding: 1em 1em;
+	height: 25%;
 }
 .buyers_input>div+div {
+	height: 75%;
 	border-top: 0.1em solid #aaa;
 }
 .buyers_input>div.drop-hover {
@@ -96,9 +95,18 @@ ul.bar_list li {
 	vertical-align: middle;
 }
 
+.expense_input .price .input-group {
+	width: 100%;
+	margin-bottom: 0.5em;
+}
 .expense_input .price .btn-default {
 	width: 100%;
 	margin-top: 0.5em;
+}
+
+.totals {
+	float: left;
+	padding: 1em;
 }
 
 h1 {
@@ -108,4 +116,25 @@ h1 {
 h1:first-child {
 	margin-top: 0;
 	margin-bottom: 0.4em;
+}
+
+ul.comma {
+	margin-bottom: 0;
+	display: inline;
+}
+ul.comma li {
+	display: inline;
+}
+ul.comma li:after {
+	content: ', ';
+}
+ul.comma li:last-child:after {
+	content: '';
+}
+
+table.table {
+	width: 30em;
+}
+table.table th {
+	border-bottom: 3px solid #000099;
 }

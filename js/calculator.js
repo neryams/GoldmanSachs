@@ -2,6 +2,6 @@ function Calculator() {
 }
 
 //
-Calculator.prototype.addExpense = function(amount,who,owers) {
+Calculator.prototype.addExpense = function(amount,who,consumers) {
 
 };
