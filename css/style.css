@@ -2,23 +2,103 @@ html, body {
 	height: 100%;
 	font-family: Helvetica, Arial, sans-serif;
 }
-.people_list {
-	width: 300px;
+body {
+	display: table;
+}
+body>div {
+	float: left;
+}
+
+ul.bar_list li {
+	border: 1px solid #bbb;
+	border-width: 1px;
+	padding: 0.5em;
+	background: #fdfdfd;
+	margin: 3px 0;
+	cursor: pointer;
+	overflow: hidden;
+	text-align: center;
+}
+
+.people_list {	
+	width: 200px;
 	height: 100%;
 	background-color: #eee;
 	border-right: 1px solid #aaa;
-	padding: 1em 0;
-
+}
+.people_list h1 {
+	margin-top: 15px !important;
 }
 .people_list ul li {
-	border: 1px solid #bbb;
 	border-width: 1px 0;
+	text-align: left;
 	padding: 0.5em 2em;
-	background: #fdfdfd;
-	margin: 3px 0;
 }
 .people_list #new_person {
 	margin: 0 1em;
+}
+.people_list .ui-draggable-dragging {
+	width: 200px;
+	z-index: 20;
+	border-width: 1px;
+}
+
+.expense_input ul li {
+	text-align: center;
+	background: #eee;
+}
+.buyers_input ul.limit-1 li {
+	margin-top: 100%;
+}
+
+.expense_input {
+	height: 100%;
+	padding: 0;
+}
+
+.expense_input .buyers_input {
+	width: 150px;
+	height: 100%;
+	border-right: 1px solid #aaa;
+	padding: 0;
+	float: left;
+}
+.buyers_input>div {
+	height: 50%;
+	padding: 1em 1em;
+}
+.buyers_input>div+div {
+	border-top: 0.1em solid #aaa;
+}
+.buyers_input>div.drop-hover {
+	border: 0.3em solid #cc0000;
+	background: #ffeeee;
+	box-sizing: border-box;
+	padding: 0.7em 0.7em;
+}
+.buyers_input>div+div.drop-hover {
+	padding-top: 0.8em;
+}
+
+.buyers_input h1 {
+	margin: 0;
+}
+
+.expense_input .price {
+	height: 100%;
+	float: left;
+	width: 400px;
+	padding: 0 6em;
+	display: table;
+}
+.expense_input .price>div {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.expense_input .price .btn-default {
+	width: 100%;
+	margin-top: 0.5em;
 }
 
 h1 {
@@ -28,8 +108,4 @@ h1 {
 h1:first-child {
 	margin-top: 0;
 	margin-bottom: 0.4em;
-}
-
-.hideUntilLoad {
-	display: none;
 }
