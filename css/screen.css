@@ -1,0 +1,29 @@
+html, body, .container-fluid, .row-fluid {
+	height:100%;
+}
+.people_list h1 {
+	margin-top: 15px !important;
+}
+
+.people_list {
+	height: 100%;
+	border: 0;
+	padding: 0;
+	border-right: 1px solid #aaa;
+}
+
+.expense_input .price {
+	height: 100%;
+	float: left;
+	padding: 0 3em;
+	display: table;
+}
+.expense_input .price>div {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.totals {
+	height: 100%;
+	overflow: scroll;
+}

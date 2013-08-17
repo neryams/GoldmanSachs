@@ -1,9 +1,5 @@
-html, body {
-	height: 100%;
-	font-family: Helvetica, Arial, sans-serif;
-}
 body {
-	display: table;
+	font-family: Helvetica, Arial, sans-serif;
 }
 body>div {
 	float: left;
@@ -20,14 +16,10 @@ ul.bar_list li {
 	text-align: center;
 }
 
-.people_list {	
-	width: 200px;
-	height: 100%;
+.people_list {
 	background-color: #eee;
-	border-right: 1px solid #aaa;
-}
-.people_list h1 {
-	margin-top: 15px !important;
+	border: 1px solid #aaa;
+	padding: 5px;
 }
 .people_list ul li {
 	border-width: 1px 0;
@@ -38,7 +30,6 @@ ul.bar_list li {
 	margin: 0 1em;
 }
 .people_list .ui-draggable-dragging {
-	width: 200px;
 	z-index: 20;
 	border-width: 1px;
 }
@@ -54,45 +45,32 @@ ul.bar_list li {
 }
 
 .expense_input .buyers_input {
-	width: 220px;
 	height: 100%;
 	border-right: 1px solid #aaa;
 	padding: 0;
 	float: left;
 	overflow: hidden;
 }
-.buyers_input>div {
+.expense_input .buyers_input>div {
 	padding: 1em 1em;
 	height: 25%;
 }
-.buyers_input>div+div {
+.expense_input .buyers_input>div+div {
 	height: 75%;
 	border-top: 0.1em solid #aaa;
 }
-.buyers_input>div.drop-hover {
+.expense_input .buyers_input>div.drop-hover {
 	border: 0.3em solid #cc0000;
 	background: #ffeeee;
 	box-sizing: border-box;
-	padding: 0.7em 0.7em;
+	padding: 0.75em 0.75em;
 }
-.buyers_input>div+div.drop-hover {
+.expense_input .buyers_input>div+div.drop-hover {
 	padding-top: 0.8em;
 }
 
-.buyers_input h1 {
-	margin: 0;
-}
-
-.expense_input .price {
-	height: 100%;
-	float: left;
-	width: 400px;
-	padding: 0 6em;
-	display: table;
-}
-.expense_input .price>div {
-	display: table-cell;
-	vertical-align: middle;
+.expense_input .buyers_input h1 {
+	margin-left: 0;
 }
 
 .expense_input .price .input-group {
@@ -118,6 +96,68 @@ h1:first-child {
 	margin-bottom: 0.4em;
 }
 
+@media (max-width: 979px) {
+	h1 {
+		font-size: 18pt;
+	}
+}
+@media (max-width: 799px) {
+	.people_list {
+		padding: 5px 5px 15px 5px;
+	}
+	.people_list #new_person {
+		clear: both;
+		margin-top: 10px;
+	}
+	.people_list #new_person.minimized input[type='text'] {
+		display: none;
+	}
+	.people_list ul.bar_list li, .people_list #new_person.minimized input[type='submit'] {
+		border: 1px solid #bbb;
+		padding: 0;
+		width: 4.7em;
+		line-height: 4.5em;
+		text-align: Center;
+		margin: 0 -10px 4px 14px;
+		float: left;
+		border-radius: 4px;
+	}
+	.people_list #new_person.minimized input[type='submit'] {
+		margin: 0;
+		width: 100%;
+		line-height: 13px;
+	}
+
+	.expense_input .buyers_input {
+		display: table;
+		border-collapse: separate;
+		border: 0;
+	}
+	.expense_input .buyers_input>div {
+		display: table-cell;
+	}
+	.expense_input .buyers_input div {
+		height: auto !important;
+		width: 50%;
+		border: 0.1em solid #aaa;
+		margin-left: 5px;
+	}
+	.expense_input .buyers_input div:first-child {
+		margin-left: 0;
+	}
+	.expense_input .buyers_input>div.drop-hover {
+		border: 0.3em solid #cc0000;
+		padding: 0.8em 0.8em;
+	}
+
+	.expense_input .price {
+		width: 16em;
+		margin: 0 auto;
+		padding: 1em;
+		clear: both;
+	}
+}
+
 ul.comma {
 	margin-bottom: 0;
 	display: inline;
@@ -133,8 +173,14 @@ ul.comma li:last-child:after {
 }
 
 table.table {
-	width: 30em;
+	width: 100%;
 }
 table.table th {
 	border-bottom: 3px solid #000099;
+}
+table.result {
+	border: 2px solid #c00;
+}
+table.result tbody>tr:first-child>td {
+	border-top: 0;
 }

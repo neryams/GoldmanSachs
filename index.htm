@@ -2,13 +2,16 @@
 <html ng-app="people-expenses">
 <head>
 	<title>Goldman Sachs</title>
+	<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=0" />
 	<link rel="stylesheet" href="css/reset.css" type="text/css">
 	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+	<link rel="stylesheet" href="css/bootstrap-responsive.min.css" type="text/css">
 	<link rel="stylesheet" href="css/style.css" type="text/css">
-	<link rel="stylesheet" href="css/screen.css" media="screen and min-device-width: 480px" type="text/css">
+	<link rel="stylesheet" href="css/screen.css" media="screen and (min-width: 800px)" type="text/css">
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-	<script src="http://code.angularjs.org/1.0.6/angular.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+	<script src="js/localStorageModule.js"></script>
 	<script src="js/people.js"></script>
 	<script>
 		var calculator; // global vars
@@ -20,119 +23,142 @@
 			*/
 	    (function(a,b){typeof module!="undefined"?module.exports=b():typeof define=="function"&&define.amd?define(a,b):this[a]=b()})("$script",function(){function q(a,b,c){for(c=0,j=a.length;c<j;++c)if(!b(a[c]))return k;return 1}function r(a,b){q(a,function(a){return!b(a)})}function s(a,b,i){function o(a){return a.call?a():d[a]}function p(){if(!--n){d[m]=1,k&&k();for(var a in f)q(a.split("|"),o)&&!r(f[a],o)&&(f[a]=[])}}a=a[l]?a:[a];var j=b&&b.call,k=j?b:i,m=j?a.join(""):b,n=a.length;return setTimeout(function(){r(a,function(a){if(h[a])return m&&(e[m]=1),h[a]==2&&p();h[a]=1,m&&(e[m]=1),t(!c.test(a)&&g?g+a+".js":a,p)})},0),s}function t(c,d){var e=a.createElement("script"),f=k;e.onload=e.onerror=e[p]=function(){if(e[n]&&!/^c|loade/.test(e[n])||f)return;e.onload=e[p]=null,f=1,h[c]=2,d()},e.async=1,e.src=c,b.insertBefore(e,b.firstChild)}var a=document,b=a.getElementsByTagName("head")[0],c=/^https?:\/\//,d={},e={},f={},g,h={},i="string",k=!1,l="push",m="DOMContentLoaded",n="readyState",o="addEventListener",p="onreadystatechange";return!a[n]&&a[o]&&(a[o](m,function u(){a.removeEventListener(m,u,k),a[n]="complete"},k),a[n]="loading"),s.get=t,s.order=function(a,b,c){(function d(e){e=a.shift(),a.length?s(e,d):s(e,b,c)})()},s.path=function(a){g=a},s.ready=function(a,b,c){a=a[l]?a:[a];var e=[];return!r(a,function(a){d[a]||e[l](a)})&&q(a,function(a){return d[a]})?b():!function(a){f[a]=f[a]||[],f[a][l](b),c&&c(e)}(a.join("|")),s},s})
 
-		$script('js/bootstrap.min.js');
-		$script('js/calculator.js', function() {
-			calculator = new Calculator();
+		$script('js/bootstrap.min.js', function() {
+		    $('#load_menu').modal('show');
 		});
-
-	    // Key types - "enter", "tab"
-	    function detectKey(e,type) {
-	    	var code = (e.keyCode ? e.keyCode : e.which);
-			if(code == 13) {
-				code = "enter";
-			}
-			else if(code == 9) {
-				code = "tab";
-			}
-			return (code == type);
-	    }
+		$script('js/calculator.js', function() {
+			Calculator = new Calculator();
+		});
+		$script('js/jquery.ui.touch-punch.min.js');
+		$script('js/math.js');
 
 	    function focusPrice() {
 			$('#price-form').find('.default').focus();
 	    }
 
+	    $(function() {
+		    $('#new_person').on('blur','input.person-name', function() {
+		    	$('#new_person').addClass('minimized');
+		    });
+		    $('#new_person div').on('click', function() {
+		    	$(this).removeClass('minimized').find("input[type='text']").focus();
+		    });
+		    $('#new_person').on('click', function() {
+		    	$(this).removeClass('minimized').find("input[type='text']").focus();
+		    });
+	    });
+
     </script>
 </head>
 <body ng-controller="People">
-	<div class="people_list">
-		<h1>People</h1>
-		<ul class="bar_list">
-			<li ng-repeat="person in people" class="person" ng-model="people" ng-value="" draggable>{{person.name}}</li>
-		</ul>
-		<form ng-submit="addPerson()">
-			<div id="new_person" class="input-group">
-				<input type="text" ng-model="personName" class="form-control person-name">
-				<span class="input-group-btn">
-					<input type="submit" class="btn btn-default add" value="+" />
-				</span>
-			</div>
-		</form>
-	</div>
-
-	<div class="expense_input" ng-controller="Calculator">
-		<div class="buyers_input">
-			<div droppable="{accept:'.person',limit:1}" ng-model="buyer">
-				<h1>Buyer</h1>
-				<ul class="bar_list limit-1">
-					<li class="person" ng-show="buyer.name">{{buyer.name}}</li>
-				</ul>
-
-			</div>
-			<div droppable="{accept:'.person', onDrop: addToPerson(person)}" ng-model="consumers">
-				<h1>Consumers</h1>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="people_list span2">
+				<h1>People</h1>
 				<ul class="bar_list">
-					<li ng-hide="consumers.length">Everyone</li>
-					<li ng-repeat="person in consumers" ng-model="consumers" class="person" ng-click="$parent.removeconsumer(person.id)">{{person.name}}</li>
+					<li ng-repeat="person in people" class="person" ng-model="people" ng-value="" draggable>{{person.name}}</li>
 				</ul>
-			</div>
-		</div>
-
-		<div class="price">
-			<div>
-				<form id="price-form" ng-submit="addReceipt()">
+				<form id="new_person" ng-submit="addPerson()">
 					<div class="input-group">
-						<span class="input-group-addon input-lg">$</span>
-						<input ng-model="priceInput" type="text" class="form-control default input-lg">
+						<input type="text" autocapitalize="on" autocorrect="off" ng-model="personName" class="form-control person-name" placeholder="Add Person">
+						<span class="input-group-btn">
+							<input type="submit" class="btn btn-default add" value="+" />
+						</span>
 					</div>
-					<div class="input-group">
-						<span class="input-group-addon">What</span>
-						<input ng-model="descriptionInput" type="text" class="form-control">
-					</div>
-					<input type="submit" class="btn btn-default btn-primary input-lg" value="Add" />
 				</form>
 			</div>
-		</div>
 
-		<div class="totals">
-			<table class="table table-striped table-hover">
-				<thead>
-					<tr>
-						<th>Buyer</th>
-						<th>Consumers</th>
-						<th>Amount</th>
-						<th>What</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="transaction in transactions">
-						<td>{{transaction.buyer.name}}</td>
-						<td>
-							<span ng-hide="transaction.consumers.length" class="">Everyone</span>
-							<ul class="comma">
-								<li ng-repeat="person in transaction.consumers">{{person.name}}</li>
-							</ul>
-						</td>
-						<td>{{transaction.amount}}</td>
-						<td>{{transaction.description}}</td>
-					</tr>
-				</tbody>
-			</table>
-			<table class="table table-striped table-hover">
-				<thead>
-					<tr>
-						<th>Buyer</th>
-						<th>Consumers</th>
-						<th>Amount</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="total in totals">
-						<td>{{total.buyer}}</td>
-						<td>{{total.consumer}}</td>
-						<td>{{total.amount}}</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="expense_input" ng-controller="Transaction">
+				<div class="buyers_input span3">
+					<div droppable="{accept:'.person',limit:1}" ng-model="buyer">
+						<h1>Buyer</h1>
+						<ul class="bar_list limit-1">
+							<li class="person" ng-show="buyer.name">{{buyer.name}}</li>
+						</ul>
+
+					</div>
+					<div droppable="{accept:'.person'}" ng-model="consumers">
+						<h1>Consumers</h1>
+						<ul class="bar_list">
+							<li ng-hide="consumers.length">Everyone</li>
+							<li ng-repeat="person in consumers" ng-model="consumers" class="person" ng-click="$parent.removeConsumer($index)">{{person.name}}<button type="button" class="close">&times;</button></li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="price span3">
+					<div>
+						<form id="price-form" ng-submit="addReceipt()">
+							<div class="input-group">
+								<span class="input-group-addon input-lg">$</span>
+								<input ng-model="priceInput" type="tel" class="form-control default input-lg">
+							</div>
+							<div class="input-group">
+								<span class="input-group-addon">What</span>
+								<input ng-model="descriptionInput" type="text" class="form-control">
+							</div>
+							<input type="submit" class="btn btn-default btn-primary input-lg" value="Add" />
+						</form>
+					</div>
+				</div>
+
+				<div class="totals span4">
+					<table class="table table-striped table-hover result">
+						<tbody>
+							<tr ng-repeat="total in totals">
+								<td>{{total.from.name}}</td>
+								<td>pays</td>
+								<td>{{total.to.name}}</td>
+								<td>${{total.amount|number:2}}</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>Buyer</th>
+								<th>Consumers</th>
+								<th>Amount</th>
+								<th>What</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="transaction in transactions">
+								<td>{{transaction.buyer.name}}</td>
+								<td>
+									<span ng-hide="transaction.consumers.length" class="">Everyone</span>
+									<ul class="comma">
+										<li ng-repeat="person in transaction.consumers">{{person.name}}</li>
+									</ul>
+								</td>
+								<td>${{transaction.amount|number:2}}</td>
+								<td>{{transaction.description}}</td>
+								<td><button type="button" class="close" ng-click="$parent.removeReceipt($index)">&times;</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="modal fade" id="load_menu">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title">You're well on your way to working at Goldman Sachs!</h4>
+							</div>
+							<div class="modal-body">
+								<p>Enter in your roommates and your receipts, and this app will calculate who owes who what.</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Start New Entry</button>
+								<button type="button" class="btn btn-primary" ng-click="loadLast()" data-dismiss="modal" ng-hide="saveDataMissing">Load Last Session</button>
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
+
+			</div>
 		</div>
 	</div>
 </body>
